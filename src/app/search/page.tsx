@@ -4,8 +4,17 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 
+interface Property {
+  id: string
+  title: string
+  address: string
+  price: number | null
+  area_sqm: number | null
+  created_at: string
+}
+
 export default function SearchPage() {
-  const [properties, setProperties] = useState<any[]>([])
+  const [properties, setProperties] = useState<Property[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -18,7 +27,7 @@ export default function SearchPage() {
       if (error) {
         console.error('오류:', error)
       } else {
-        setProperties(data || [])
+        setProperties((data ?? []) as Property[])
       }
       setLoading(false)
     }
